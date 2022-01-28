@@ -24,7 +24,6 @@ public class Client implements Initializable {
     public Button refr;
     public ListView<String> serverView;
     public ListView<String> clientView;
-    public TextField textField;
     private DataInputStream is;
     private DataOutputStream os;
     private Path path;
@@ -45,7 +44,7 @@ public class Client implements Initializable {
                         String fileName = is.readUTF();
                         Platform.runLater(() -> serverView.getItems().add(fileName));
                     }
-                } else if (command.equals("#upload_file#")) {
+                } else if (command.equals("#file#")) {
                     String fileName = is.readUTF();
                     System.out.println("received: " + fileName);
                     Long size = is.readLong();
@@ -94,13 +93,13 @@ public class Client implements Initializable {
 
             public void upload (ActionEvent actionEvent) throws IOException {
                 String fileName = clientView.getSelectionModel().getSelectedItem();
-                os.writeUTF("#upload_file#");
+                os.writeUTF("#file#");
+                os.writeUTF(fileName);
                 Path file = path.resolve(fileName);
                 long size = Files.size(file);
                 byte[] bytes = Files.readAllBytes(file);
                 os.writeLong(size);
                 os.write(bytes);
-                os.writeUTF(fileName);
                 os.flush();
 
             }
@@ -108,9 +107,8 @@ public class Client implements Initializable {
 
             public void download (ActionEvent actionEvent) throws IOException {
                 String fileName = serverView.getSelectionModel().getSelectedItem();
-                os.writeUTF("#download_file#");
+                os.writeUTF("#get_file#");
                 os.writeUTF(fileName);
-
                 os.flush();
             }
         }

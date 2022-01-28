@@ -10,6 +10,7 @@ public class Server {
     public static void main(String[] args) throws IOException {
         ServerSocket server = new ServerSocket(8189);
 
+        //noinspection InfiniteLoopStatement
         while (true) {
             Socket socket = server.accept();
             System.out.println("New client connected...");

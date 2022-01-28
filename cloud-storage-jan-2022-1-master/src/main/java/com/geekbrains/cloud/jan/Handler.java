@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 public class Handler implements Runnable {
 
-    private DataInputStream is;
-    private DataOutputStream os;
-    private Path path;
+    private final DataInputStream is;
+    private final DataOutputStream os;
+    private final Path path;
     private static final int SIZE = 256;
-    private byte[] buff;
+    private final byte[] buff;
 
     public Handler(Socket socket) throws IOException {
         is = new DataInputStream(socket.getInputStream());
@@ -43,19 +43,20 @@ os.flush();
             while (true) {
                 String command = is.readUTF();
                 System.out.println("received: " + command);
-                if (command.equals("#upload_file#")) {
+                if (command.equals("#file#")) {
                     String fileName = is.readUTF();
+                    System.out.println("received: " + fileName);
                     Long size = is.readLong();
                     try (OutputStream fileOS = new FileOutputStream((path.resolve(fileName).toFile()))) {
-                        for (int i = 0; i < (size + SIZE - 1); i++) {
+                        for (int i = 0; i < (size + SIZE - 1)/ SIZE; i++) {
                             int readBytes = is.read(buff);
                             fileOS.write(buff, 0, readBytes);
                         }
                     }
                     sendServerFiles();
-                } else if (command.equals("#download_file#")) {
+                } else if (command.equals("#get_file#")) {
                     String fileName = is.readUTF();
-                    os.writeUTF("#upload_file#");
+                    os.writeUTF("#file#");
                     Path file = path.resolve(fileName);
                     long size = Files.size(file);
                     byte[] bytes = Files.readAllBytes(file);
