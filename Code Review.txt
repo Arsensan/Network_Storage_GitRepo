@@ -1,0 +1,11 @@
+1) Добавил в графичесекий интерфейс в текстовых поля TextArea для серверна и клиента а так же кнопки "наверх"
+
+2)Реализовал в методе  public void clientFolderReturn в классе Client кнопку "наверх"
+
+3) Реализовал в методе public void showDir()  в классе Client  отображение текущей директории в TextArea клиента
+
+4) Добавил в конструктор класса ListMessage блок кода serverDir = path.normalize().toString(); и в метод processListMessage класса Client блок кода serverCurrentDir.setText(message.getServerDir());
+
+Таким обазом удалось отобразить текущую директорию сервера в текстовом окне public TextArea serverCurrentDir;
+
+ Это все , что мне удалось сделать самостоятельно
