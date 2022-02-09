@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.cloud.jan.Client">
+   <ListView fx:id="clientView" layoutX="14.0" layoutY="90.0" prefHeight="296.0" prefWidth="362.0" />
+   <ListView fx:id="serverView" layoutX="495.0" layoutY="89.0" prefHeight="296.0" prefWidth="362.0" />
+   <Button layoutX="412.0" layoutY="120.0" mnemonicParsing="false" onAction="#upload" prefHeight="40.0" prefWidth="40.0" text="&gt;" />
+   <Button layoutX="412.0" layoutY="204.0" mnemonicParsing="false" onAction="#download" prefHeight="40.0" prefWidth="40.0" text="&lt;" />
+   <Button layoutX="322.0" layoutY="18.0" maxHeight="72.0" maxWidth="53.0" minHeight="25.0" minWidth="53.0" mnemonicParsing="false" onAction="#clientFolderReturn" prefHeight="69.0" prefWidth="53.0" text="..." />
+   <Button layoutX="803.0" layoutY="18.0" maxHeight="72.0" maxWidth="53.0" minHeight="25.0" minWidth="53.0" mnemonicParsing="false" onAction="#serverFolderReturn" prefHeight="69.0" prefWidth="53.0" text="..." />
+   <TextArea fx:id="clientCurrentDir" editable="false" layoutX="14.0" layoutY="17.0" prefHeight="70.0" prefWidth="302.0">
+      <font>
+         <Font size="13.0" />
+      </font>
+   </TextArea>
+   <TextArea fx:id="serverCurrentDir" editable="false" layoutX="495.0" layoutY="17.0" prefHeight="70.0" prefWidth="302.0">
+      <font>
+         <Font size="13.0" />
+      </font>
+   </TextArea>
+   <Button layoutX="411.0" onAction="#deleteClientFile" layoutY="294.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="41.0" text="Del" />
+</AnchorPane>

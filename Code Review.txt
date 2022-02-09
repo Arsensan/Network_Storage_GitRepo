@@ -1,0 +1,40 @@
+1) Добавил в графичесекий интерфейс в текстовых поля TextArea для серверна и клиента а так же кнопки "наверх"
+
+2)Реализовал в методе  public void clientFolderReturn в классе Client кнопку "наверх"
+
+3) Реализовал в методе public void showDir()  в классе Client  отображение текущей директории в TextArea клиента
+
+4) Добавил в конструктор класса ListMessage блок кода serverDir = path.normalize().toString(); и в метод processListMessage класса Client блок кода serverCurrentDir.setText(message.getServerDir());
+
+Таким обазом удалось отобразить текущую директорию сервера в текстовом окне public TextArea serverCurrentDir;
+
+ Это все , что мне удалось сделать самостоятельно
+
+
+5) Добавил в классе FileRequest коструктор к полю String filename, в CloudserverHandler обновил метод processFileRequest и он теперь отправляет на клиент и папку и файл:
+
+
+private void processFileRequest(FileRequest cloudMessage, ChannelHandlerContext ctx) throws IOException {
+        Path path = currentDir.resolve(cloudMessage.getFileName());
+        if (Files.isDirectory(path)){
+            currentDir = path;
+            ctx.writeAndFlush(new ListMessage(currentDir));
+        } else
+            ctx.writeAndFlush(new FileMessage(path));
+        }
+
+    }
+
+ Теперь при двойном нажатии мыши на элемент в окне сервера serverView метод initMouseListeners() отправляет на сервер :
+
+os.writeObject(new FileRequest (dir));
+
+И если это папка в проваливается в нее
+
+6) Добавил функционал к кнопке   serverFolderReturn в классе Client: 
+public void serverFolderReturn(ActionEvent actionEvent) throws IOException {
+        os.writeObject(new MoveBack(".."));
+Добавил сопутствующие классы MoveBack и moveBackProcess в классе  CloudserverHandler
+
+7) Добавил кнопку удаления файла или директории. Метод  public void deleteClientFile(ActionEvent actionEvent) throws IOException  в классе Client  и поддержка этой функции на сервере
+класс DeleteFile и метод private void deleteFileProcess(DeleteFile cloudMessage, ChannelHandlerContext ctx) в классе  CloudserverHandler
